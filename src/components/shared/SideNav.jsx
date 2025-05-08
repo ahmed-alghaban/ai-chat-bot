@@ -1,10 +1,7 @@
 import { NavLink } from 'react-router-dom';
-import { useState } from 'react';
 import { ChatBubbleLeftRightIcon, KeyIcon, DocumentTextIcon } from '@heroicons/react/24/outline';
 
-const SideNav = () => {
-    const [isCollapsed, setIsCollapsed] = useState(false);
-
+const SideNav = ({ isCollapsed, onCollapse }) => {
     const navItems = [
         { path: '/chat', icon: ChatBubbleLeftRightIcon, label: 'Chat' },
         { path: '/keys', icon: KeyIcon, label: 'Key Management' },
@@ -12,7 +9,7 @@ const SideNav = () => {
     ];
 
     return (
-        <div className="h-[calc(100vh-72px)] bg-[var(--message-bg-light)] dark:bg-[var(--message-bg-dark)] shadow-lg relative">
+        <div className="h-full bg-[var(--message-bg-light)] dark:bg-[var(--message-bg-dark)] shadow-lg mt-4">
             <nav className={`h-full transition-all duration-300 ${isCollapsed ? 'w-16' : 'w-64'}`}>
                 <div className="p-4 flex flex-col h-full">
                     {/* Title Section */}
@@ -45,7 +42,7 @@ const SideNav = () => {
 
                     {/* Collapse Button */}
                     <button
-                        onClick={() => setIsCollapsed(!isCollapsed)}
+                        onClick={() => onCollapse(!isCollapsed)}
                         className="hidden md:flex items-center justify-center w-full py-3 mt-4 bg-gray-100 dark:bg-gray-700 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
                     >
                         <svg
