@@ -21,23 +21,26 @@ const Layout = () => {
     }, []);
 
     return (
-        <>
+        <div className="relative min-h-screen w-full">
             {/* Background Layer */}
-            <div className="fixed inset-0 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800" />
+            <div
+                className="fixed inset-0 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800"
+                style={{ minHeight: '100vh' }}
+            />
 
             {/* Content Layer */}
-            <div className="relative min-h-screen">
+            <div className="relative">
                 {/* Navbar */}
                 <div className="fixed top-0 left-0 right-0 z-40">
                     <Navbar onMenuClick={() => setIsSidebarOpen(!isSidebarOpen)} />
                 </div>
 
                 {/* Main Content Area */}
-                <div className="flex min-h-screen pt-16">
+                <div className="flex min-h-[calc(100vh-4rem)] pt-16">
                     {/* Sidebar Overlay */}
                     {isMobile && isSidebarOpen && (
                         <div
-                            className="fixed inset-0 bg-black bg-opacity-50 z-20"
+                            className="fixed inset-0 bg-black/50 z-20"
                             onClick={() => setIsSidebarOpen(false)}
                         />
                     )}
@@ -57,7 +60,7 @@ const Layout = () => {
                     </main>
                 </div>
             </div>
-        </>
+        </div>
     );
 };
 
