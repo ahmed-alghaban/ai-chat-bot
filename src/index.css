@@ -1,0 +1,83 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    --primary-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+    --chat-bg-light: #f8fafc;
+    --chat-bg-dark: #0f172a;
+    --message-bg-light: #ffffff;
+    --message-bg-dark: #1e293b;
+    --ai-message-bg-light: #f1f5f9;
+    --ai-message-bg-dark: #0f172a;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+    @apply bg-[var(--chat-bg-light)] dark:bg-[var(--chat-bg-dark)];
+    min-height: 100vh;
+    width: 100%;
+    transition: background-color 0.3s ease;
+    position: relative;
+}
+
+@media (max-width: 768px) {
+
+    html,
+    body,
+    #root {
+        min-height: -webkit-fill-available;
+    }
+}
+
+/* Custom scrollbar for chat */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    @apply bg-transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    @apply bg-gray-300 dark:bg-gray-600 rounded-full;
+}
+
+/* Message animations */
+@keyframes messageSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.message-animate {
+    animation: messageSlideIn 0.3s ease-out;
+}
+
+/* Glass effect */
+.glass {
+    @apply bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg;
+}
+
+/* Gradient text */
+.gradient-text {
+    @apply bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent;
+}
+
+/* Gradient button */
+.gradient-button {
+    @apply bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white shadow-sm;
+}
