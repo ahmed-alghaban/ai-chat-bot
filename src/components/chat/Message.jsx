@@ -26,28 +26,28 @@ const Message = ({ message }) => {
     };
 
     return (
-        <div className="w-full space-y-4 message-animate">
+        <div className="w-full space-y-2 sm:space-y-4 message-animate">
             {/* User Message */}
-            <div className="flex w-full py-4 px-4 bg-[var(--message-bg-light)] dark:bg-[var(--message-bg-dark)] rounded-lg shadow-sm">
-                <div className="flex w-full max-w-3xl mx-auto">
+            <div className="flex w-full py-2 sm:py-4 px-2 sm:px-4 bg-[var(--message-bg-light)] dark:bg-[var(--message-bg-dark)] rounded-lg shadow-sm">
+                <div className="flex w-full">
                     <div className="flex-shrink-0 w-8 h-8 rounded-full bg-indigo-600 flex items-center justify-center text-white font-bold shadow-md">
                         U
                     </div>
-                    <div className="ml-4 flex-1 relative group">
+                    <div className="ml-2 sm:ml-4 flex-1 relative group">
                         <div className="prose prose-sm max-w-none text-gray-800 dark:text-gray-200">
                             {userMessage.content || ''}
                         </div>
                         <button
                             onClick={() => handleCopy(userMessage.content, 'user')}
-                            className="absolute top-0 right-0 p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+                            className="absolute top-0 right-0 p-1 sm:p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
                             title="Copy message"
                         >
                             {copyStatus.user ? (
-                                <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <svg className="w-4 h-4 sm:w-5 sm:h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                                 </svg>
                             ) : (
-                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
                                 </svg>
                             )}
@@ -57,12 +57,12 @@ const Message = ({ message }) => {
             </div>
 
             {/* AI Response */}
-            <div className="flex w-full py-4 px-4 bg-[var(--ai-message-bg-light)] dark:bg-[var(--ai-message-bg-dark)] rounded-lg shadow-sm">
-                <div className="flex w-full max-w-3xl mx-auto">
+            <div className="flex w-full py-2 sm:py-4 px-2 sm:px-4 bg-[var(--ai-message-bg-light)] dark:bg-[var(--ai-message-bg-dark)] rounded-lg shadow-sm">
+                <div className="flex w-full">
                     <div className="flex-shrink-0 w-8 h-8 rounded-full bg-emerald-600 flex items-center justify-center text-white font-bold shadow-md">
                         AI
                     </div>
-                    <div className="ml-4 flex-1 relative group">
+                    <div className="ml-2 sm:ml-4 flex-1 relative group">
                         <div className="prose prose-sm max-w-none text-gray-800 dark:text-gray-200">
                             <ReactMarkdown
                                 components={{
@@ -96,15 +96,15 @@ const Message = ({ message }) => {
                         </div>
                         <button
                             onClick={() => handleCopy(aiResponse.content, 'ai')}
-                            className="absolute top-0 right-0 p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+                            className="absolute top-0 right-0 p-1 sm:p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
                             title="Copy message"
                         >
                             {copyStatus.ai ? (
-                                <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <svg className="w-4 h-4 sm:w-5 sm:h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                                 </svg>
                             ) : (
-                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
                                 </svg>
                             )}

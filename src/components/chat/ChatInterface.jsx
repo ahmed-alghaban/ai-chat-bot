@@ -13,7 +13,7 @@ const ChatInterface = () => {
     }
 
     return (
-        <div className="flex flex-col h-full">
+        <div className="flex flex-col h-full w-full flex-1">
             {/* Main Chat Area */}
             <div className="flex-1 bg-white dark:bg-gray-800 rounded-lg shadow-lg mb-4 overflow-hidden">
                 <MessageList messages={conversations} />

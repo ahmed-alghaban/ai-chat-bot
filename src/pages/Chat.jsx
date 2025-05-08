@@ -14,8 +14,8 @@ const Chat = () => {
 
     if (!apiKey) {
         return (
-            <div className="h-[calc(100vh-72px)] flex items-center justify-center p-4">
-                <div className="bg-[var(--message-bg-light)] dark:bg-[var(--message-bg-dark)] rounded-xl shadow-lg p-8 max-w-md w-full text-center">
+            <div className="h-[calc(100vh-72px)] flex items-center justify-center p-2 sm:p-4">
+                <div className="bg-[var(--message-bg-light)] dark:bg-[var(--message-bg-dark)] rounded-xl shadow-lg p-4 sm:p-8 max-w-md w-full text-center">
                     <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
                         API Key Required
                     </h2>
@@ -34,11 +34,11 @@ const Chat = () => {
     }
 
     return (
-        <div className="h-[calc(100vh-72px)] flex flex-col p-4 space-y-4">
+        <div className="h-[calc(100vh-72px)] flex flex-col p-2 sm:p-4 space-y-2 sm:space-y-4">
             <div className="flex-1 bg-[var(--message-bg-light)] dark:bg-[var(--message-bg-dark)] rounded-xl shadow-lg overflow-hidden">
                 <MessageList />
             </div>
-            <div className="bg-[var(--message-bg-light)] dark:bg-[var(--message-bg-dark)] rounded-xl shadow-lg p-4">
+            <div className="bg-[var(--message-bg-light)] dark:bg-[var(--message-bg-dark)] rounded-xl shadow-lg p-2 sm:p-4">
                 <MessageInput />
             </div>
         </div>
