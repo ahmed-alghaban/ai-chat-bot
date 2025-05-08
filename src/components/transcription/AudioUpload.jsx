@@ -3,25 +3,65 @@ import { isValidAudioFile } from '../../utils/validation';
 
 const AudioUpload = ({ onFileSelect, isRecording, onStartRecording, onStopRecording }) => {
     const [audioFile, setAudioFile] = useState(null);
+    const [isDragging, setIsDragging] = useState(false);
     const fileInputRef = useRef(null);
 
-    const handleFileUpload = (event) => {
-        const file = event.target.files[0];
+    const handleFileUpload = (file) => {
         if (file && isValidAudioFile(file)) {
             setAudioFile(file);
             onFileSelect(file);
         }
     };
 
+    const handleDragEnter = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        setIsDragging(true);
+    };
+
+    const handleDragLeave = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        setIsDragging(false);
+    };
+
+    const handleDragOver = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+    };
+
+    const handleDrop = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        setIsDragging(false);
+
+        const file = e.dataTransfer.files[0];
+        handleFileUpload(file);
+    };
+
+    const handleFileInputChange = (event) => {
+        const file = event.target.files[0];
+        handleFileUpload(file);
+    };
+
     return (
         <div className="space-y-6">
             {/* File Upload Section */}
-            <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-6 text-center">
+            <div
+                className={`border-2 border-dashed rounded-lg p-6 text-center transition-colors duration-200 ${isDragging
+                        ? 'border-indigo-500 bg-indigo-50 dark:bg-indigo-900/20'
+                        : 'border-gray-300 dark:border-gray-600'
+                    }`}
+                onDragEnter={handleDragEnter}
+                onDragLeave={handleDragLeave}
+                onDragOver={handleDragOver}
+                onDrop={handleDrop}
+            >
                 <input
                     ref={fileInputRef}
                     type="file"
                     accept="audio/*"
-                    onChange={handleFileUpload}
+                    onChange={handleFileInputChange}
                     className="hidden"
                     id="audio-upload"
                 />
@@ -29,8 +69,18 @@ const AudioUpload = ({ onFileSelect, isRecording, onStartRecording, onStopRecord
                     htmlFor="audio-upload"
                     className="cursor-pointer inline-flex items-center px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition duration-150 ease-in-out"
                 >
+                    <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                    </svg>
                     Upload Audio File
                 </label>
+                <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">
+                    {isDragging ? (
+                        "Drop your audio file here"
+                    ) : (
+                        "or drag and drop your audio file here"
+                    )}
+                </p>
                 {audioFile && (
                     <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">
                         Selected file: {audioFile.name}
