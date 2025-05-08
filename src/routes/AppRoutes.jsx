@@ -19,12 +19,12 @@ const AppRoutes = () => {
             <Routes>
                 {/* Public Routes */}
                 <Route
-                    path="/login"
-                    element={currentUser ? <Navigate to="/" /> : <Login />}
+                    path="/"
+                    element={currentUser ? <Navigate to="/chat" /> : <Login />}
                 />
                 <Route
                     path="/register"
-                    element={currentUser ? <Navigate to="/" /> : <Register />}
+                    element={currentUser ? <Navigate to="/chat" /> : <Register />}
                 />
 
                 {/* Protected Routes */}
@@ -35,7 +35,7 @@ const AppRoutes = () => {
                         </PrivateRoute>
                     }
                 >
-                    <Route path="/" element={<Chat />} />
+                    <Route path="/chat" element={<Chat />} />
                     <Route path="/keys" element={<APIKeyManager />} />
                     <Route path="/transcriptions" element={<Transcription />} />
                 </Route>

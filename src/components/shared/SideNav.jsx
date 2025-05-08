@@ -5,7 +5,7 @@ const SideNav = () => {
     const navItems = [
         {
             name: 'Chat',
-            path: '/',
+            path: '/chat',
             icon: ChatBubbleLeftRightIcon
         },
         {
