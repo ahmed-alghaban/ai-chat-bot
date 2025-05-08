@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { isValidAudioFile } from '../../utils/validation';
 
-const AudioUpload = ({ onFileSelect, isRecording, onStartRecording, onStopRecording }) => {
+const AudioUpload = ({ onFileSelect, isRecording, onStartRecording, onStopRecording, isProcessing, onClear }) => {
     const [audioFile, setAudioFile] = useState(null);
     const [isDragging, setIsDragging] = useState(false);
     const fileInputRef = useRef(null);
@@ -11,6 +11,14 @@ const AudioUpload = ({ onFileSelect, isRecording, onStartRecording, onStopRecord
             setAudioFile(file);
             onFileSelect(file);
         }
+    };
+
+    const handleClear = () => {
+        setAudioFile(null);
+        if (fileInputRef.current) {
+            fileInputRef.current.value = '';
+        }
+        onClear();
     };
 
     const handleDragEnter = (e) => {
@@ -36,12 +44,16 @@ const AudioUpload = ({ onFileSelect, isRecording, onStartRecording, onStopRecord
         setIsDragging(false);
 
         const file = e.dataTransfer.files[0];
-        handleFileUpload(file);
+        if (file) {
+            handleFileUpload(file);
+        }
     };
 
     const handleFileInputChange = (event) => {
         const file = event.target.files[0];
-        handleFileUpload(file);
+        if (file) {
+            handleFileUpload(file);
+        }
     };
 
     return (
@@ -49,8 +61,8 @@ const AudioUpload = ({ onFileSelect, isRecording, onStartRecording, onStopRecord
             {/* File Upload Section */}
             <div
                 className={`border-2 border-dashed rounded-lg p-6 text-center transition-colors duration-200 ${isDragging
-                        ? 'border-indigo-500 bg-indigo-50 dark:bg-indigo-900/20'
-                        : 'border-gray-300 dark:border-gray-600'
+                    ? 'border-indigo-500 bg-indigo-50 dark:bg-indigo-900/20'
+                    : 'border-gray-300 dark:border-gray-600'
                     }`}
                 onDragEnter={handleDragEnter}
                 onDragLeave={handleDragLeave}
@@ -82,9 +94,21 @@ const AudioUpload = ({ onFileSelect, isRecording, onStartRecording, onStopRecord
                     )}
                 </p>
                 {audioFile && (
-                    <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">
-                        Selected file: {audioFile.name}
-                    </p>
+                    <div className="mt-4">
+                        <div className="flex items-center justify-center space-x-2">
+                            <p className="text-sm text-gray-600 dark:text-gray-300">
+                                Selected file: {audioFile.name}
+                            </p>
+                            <button
+                                onClick={handleClear}
+                                className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+                            >
+                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
                 )}
             </div>
 
@@ -102,9 +126,9 @@ const AudioUpload = ({ onFileSelect, isRecording, onStartRecording, onStopRecord
                 )}
                 <button
                     onClick={isRecording ? onStopRecording : onStartRecording}
-                    className={`inline-flex items-center px-6 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 transition duration-150 ease-in-out ${isRecording
-                            ? 'bg-red-600 hover:bg-red-700 text-white focus:ring-red-500'
-                            : 'bg-indigo-600 hover:bg-indigo-700 text-white focus:ring-indigo-500'
+                    className={`inline-flex items-center px-4 py-2 rounded-lg ${isRecording
+                        ? 'bg-red-600 hover:bg-red-700 text-white'
+                        : 'bg-indigo-600 hover:bg-indigo-700 text-white'
                         }`}
                 >
                     {isRecording ? (

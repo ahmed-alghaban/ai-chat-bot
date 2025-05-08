@@ -37,9 +37,11 @@ export const transcribeAudioService = async ({ audioFile, apiKey }) => {
                 'Content-Type': 'multipart/form-data'
             }
         });
-        return data;
+
+        // Return the transcription text
+        return { text: data.text };
     } catch (error) {
-        console.error('API Error:', error.response?.data);
+        console.error('Transcription Error:', error.response?.data || error);
         throw new Error(error.response?.data?.error?.message || 'Failed to transcribe audio');
     }
 };

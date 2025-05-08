@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useApp } from '../hooks/useApp';
 import AudioUpload from '../components/transcription/AudioUpload';
 import ProgressIndicator from '../components/transcription/ProgressIndicator';
@@ -8,6 +8,7 @@ const Transcription = () => {
     const { apiKey, transcription, transcribeAudio, isTranscribing, transcriptionError, clearTranscription } = useApp();
     const [isRecording, setIsRecording] = useState(false);
     const [audioFile, setAudioFile] = useState(null);
+    const [isProcessing, setIsProcessing] = useState(false);
     const mediaRecorderRef = useRef(null);
     const audioChunksRef = useRef([]);
 
@@ -25,7 +26,7 @@ const Transcription = () => {
                 const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/wav' });
                 const audioFile = new File([audioBlob], 'recording.wav', { type: 'audio/wav' });
                 setAudioFile(audioFile);
-                // Automatically transcribe when recording stops
+                setIsProcessing(true);
                 transcribeAudio(audioFile);
             };
 
@@ -45,15 +46,26 @@ const Transcription = () => {
     };
 
     const handleFileSelect = (file) => {
+        if (!file || !apiKey) {
+            return;
+        }
         setAudioFile(file);
-        // Automatically transcribe when a file is selected
+        setIsProcessing(true);
         transcribeAudio(file);
     };
 
     const handleClear = () => {
         clearTranscription();
         setAudioFile(null);
+        setIsProcessing(false);
     };
+
+    // Reset processing state when transcription is complete
+    useEffect(() => {
+        if (!isTranscribing && !transcriptionError) {
+            setIsProcessing(false);
+        }
+    }, [isTranscribing, transcriptionError]);
 
     if (!apiKey) {
         return (
@@ -82,12 +94,17 @@ const Transcription = () => {
                     isRecording={isRecording}
                     onStartRecording={startRecording}
                     onStopRecording={stopRecording}
+                    isProcessing={isProcessing}
+                    onClear={handleClear}
                 />
 
-                <ProgressIndicator
-                    isTranscribing={isTranscribing}
-                    error={transcriptionError}
-                />
+                {(isProcessing || isTranscribing || transcription) && (
+                    <ProgressIndicator
+                        isTranscribing={isTranscribing}
+                        error={transcriptionError}
+                        transcription={transcription}
+                    />
+                )}
 
                 <TranscriptionViewer
                     transcription={transcription}

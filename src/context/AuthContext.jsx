@@ -33,7 +33,8 @@ export const AuthContextProvider = ({ children }) => {
     const signIn = async (email, password) => {
         setIsLoading(true);
         try {
-            await signInWithEmailAndPassword(auth, email, password);
+            const result = await signInWithEmailAndPassword(auth, email, password);
+            setCurrentUser(result.user);
             return true;
         } catch (error) {
             return error.message.split('Firebase: ')[1] || error.message;

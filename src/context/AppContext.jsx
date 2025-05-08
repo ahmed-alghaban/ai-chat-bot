@@ -88,13 +88,33 @@ export const AppContextProvider = ({ children }) => {
         isLoading: isTranscribing,
         error: transcriptionError
     } = useMutation({
-        mutationFn: (audioFile) => transcribeAudioService({ audioFile, apiKey }),
+        mutationFn: async (audioFile) => {
+            if (!audioFile || !apiKey) {
+                throw new Error('Audio file and API key are required');
+            }
+            const formData = new FormData();
+            formData.append('file', audioFile, audioFile.name);
+            formData.append('model', 'whisper-1');
+
+            const response = await fetch('https://api.openai.com/v1/audio/transcriptions', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${apiKey}`,
+                },
+                body: formData,
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to transcribe audio');
+            }
+
+            const data = await response.json();
+            return data.text;
+        },
         onSuccess: (data) => {
-            console.log('Transcription successful:', data);
-            setTranscriptionText(data.text);
+            setTranscriptionText(data);
         },
         onError: (error) => {
-            console.error('Transcription failed:', error);
             setTranscriptionText('');
         }
     });
