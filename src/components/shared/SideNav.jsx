@@ -21,14 +21,14 @@ const SideNav = () => {
     ];
 
     return (
-        <nav className="h-full w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 shadow-lg">
-            <div className="p-6">
+        <nav className="fixed top-0 left-0 h-screen w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 shadow-lg overflow-y-auto">
+            <div className="sticky top-0 bg-white dark:bg-gray-800 p-6 border-b border-gray-200 dark:border-gray-700">
                 <h1 className="text-2xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
                     AI Chat Bot
                 </h1>
             </div>
 
-            <div className="px-4 space-y-2">
+            <div className="px-4 py-4 space-y-2">
                 {navItems.map((item) => (
                     <NavLink
                         key={item.path}

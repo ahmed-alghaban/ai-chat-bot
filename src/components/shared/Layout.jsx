@@ -1,64 +1,35 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import SideNav from './SideNav';
 import Navbar from './Navbar';
 
 const Layout = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-    const [isMobile, setIsMobile] = useState(false);
-
-    useEffect(() => {
-        const handleResize = () => {
-            setIsMobile(window.innerWidth < 768);
-            if (window.innerWidth >= 768) {
-                setIsSidebarOpen(false);
-            }
-        };
-
-        handleResize();
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-    }, []);
 
     return (
-        <div className="relative min-h-screen w-full">
-            {/* Background Layer */}
-            <div
-                className="fixed inset-0 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800"
-                style={{ minHeight: '100vh' }}
-            />
+        <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
+            <Navbar onMenuClick={() => setIsSidebarOpen(!isSidebarOpen)} />
 
-            {/* Content Layer */}
-            <div className="relative">
-                {/* Navbar */}
-                <div className="fixed top-0 left-0 right-0 z-40">
-                    <Navbar onMenuClick={() => setIsSidebarOpen(!isSidebarOpen)} />
+            <div className="flex pt-16">
+                {/* Sidebar */}
+                <div className={`fixed inset-y-0 left-0 z-30 w-64 transform transition-transform duration-300 ease-in-out ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0`}>
+                    <SideNav />
                 </div>
 
-                {/* Main Content Area */}
-                <div className="flex min-h-[calc(100vh-4rem)] pt-16">
-                    {/* Sidebar Overlay */}
-                    {isMobile && isSidebarOpen && (
-                        <div
-                            className="fixed inset-0 bg-black/50 z-20"
-                            onClick={() => setIsSidebarOpen(false)}
-                        />
-                    )}
+                {/* Overlay */}
+                {isSidebarOpen && (
+                    <div
+                        className="fixed inset-0 bg-black bg-opacity-50 z-20 md:hidden"
+                        onClick={() => setIsSidebarOpen(false)}
+                    />
+                )}
 
-                    {/* Sidebar */}
-                    <aside className={`
-                        fixed md:static inset-y-0 left-0 z-30
-                        transform transition-transform duration-300 ease-in-out
-                        ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
-                    `}>
-                        <SideNav />
-                    </aside>
-
-                    {/* Main Content */}
-                    <main className="flex-1 p-4 md:p-6 transition-all duration-300 ease-in-out">
+                {/* Main Content */}
+                <main className="flex-1 md:ml-64 p-4 md:p-6">
+                    <div className="max-w-7xl mx-auto">
                         <Outlet />
-                    </main>
-                </div>
+                    </div>
+                </main>
             </div>
         </div>
     );
