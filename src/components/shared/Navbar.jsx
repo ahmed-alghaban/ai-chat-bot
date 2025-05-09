@@ -17,7 +17,7 @@ const Navbar = ({ onMenuClick }) => {
                             AI Chat Bot
                         </span>
                     </div>
-                    <div className="">
+                    <div>
                         <ThemeToggle />
                     </div>
                 </div>
