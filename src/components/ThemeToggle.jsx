@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-const ThemeToggle = () => {
+const ThemeToggle = ({ className = '' }) => {
     const [isDark, setIsDark] = useState(localStorage.getItem('theme') === 'dark');
 
     const toggleTheme = () => {
@@ -13,7 +13,7 @@ const ThemeToggle = () => {
     return (
         <button
             onClick={toggleTheme}
-            className="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors duration-200"
+            className={`p-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors duration-200 ${className}`}
             aria-label="Toggle theme"
         >
             {isDark ? (

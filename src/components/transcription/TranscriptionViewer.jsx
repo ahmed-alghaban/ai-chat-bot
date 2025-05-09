@@ -13,7 +13,7 @@ const TranscriptionViewer = ({ transcription, onClear }) => {
         }
     };
 
-    if (!transcription) return null;
+    if (!transcription) { return null };
 
     return (
         <div className="mt-6">
