@@ -14,7 +14,7 @@ const Chat = () => {
 
     if (!apiKey) {
         return (
-            <div className="h-[calc(100vh-72px)] flex items-center justify-center p-2 sm:p-4">
+            <div className="flex items-center justify-center p-2 sm:p-4 h-full">
                 <div className="bg-[var(--message-bg-light)] dark:bg-[var(--message-bg-dark)] rounded-xl shadow-lg p-4 sm:p-8 max-w-md w-full text-center">
                     <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
                         API Key Required

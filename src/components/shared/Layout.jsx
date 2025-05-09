@@ -25,7 +25,7 @@ const Layout = () => {
         <div className="min-h-screen w-full overflow-x-hidden bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
             <Navbar onMenuClick={() => setIsSidebarOpen(!isSidebarOpen)} />
 
-            <div className="flex h-[calc(100vh-72px)] pt-16">
+            <div className="flex h-[calc(104vh-72px)] pt-16">
                 {/* Sidebar */}
                 <aside className={`
                     fixed md:static inset-y-0 left-0 z-30
