@@ -16,7 +16,7 @@ const SideNav = ({ isCollapsed, onCollapse }) => {
                 <div className="p-4 flex flex-col h-full">
                     {/* Title Section */}
                     {!isCollapsed && (
-                        <div className="mb-8 flex flex-col items-center">
+                        <div className="mb-8 flex flex-col items-center pt-16 md:pt-0">
                             <div className="w-16 h-16 rounded-full bg-gradient-to-r from-indigo-600 to-purple-600 flex items-center justify-center mb-3">
                                 {currentUser?.photoURL ? (
                                     <img
